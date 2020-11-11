@@ -5,14 +5,18 @@
                 <b-icon icon="circle-fill" class="text-info" animation="throb" font-scale="1"></b-icon> Low Cost Engine
             </b-navbar-brand>
 
-            <!-- <b-navbar-toggle target="nav-collapse"></b-navbar-toggle> -->
+            <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
             <b-collapse id="nav-collapse" is-nav>
                 <!-- Right aligned nav items -->
                 <b-navbar-nav class="ml-auto">
                     <b-nav-item-dropdown text="Lang" right>
-                        <b-dropdown-item href="#">EN</b-dropdown-item>
-                        <b-dropdown-item href="#">TH</b-dropdown-item>
+                        <b-dropdown-item href="#" style="vertical-align:middle !important;">
+                            <span><img width="20" src="../assets/us.svg" /> US</span>
+                        </b-dropdown-item>
+                        <b-dropdown-item href="#" style="vertical-align:middle !important;">
+                            <span><img width="20" src="../assets/th.svg" /> TH</span>
+                        </b-dropdown-item>
                     </b-nav-item-dropdown>
 
                     <b-nav-item-dropdown right>
