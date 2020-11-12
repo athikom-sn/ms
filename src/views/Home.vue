@@ -1,23 +1,26 @@
 <template>
   <div class="home">
-    <b-container class="mb-4">
-      <b-row>
-        <!-- <b-col id="timeline" class="d-block d-sm-none" cols="2"></b-col> -->
-        <b-col id="main">
+    
 
-          <Article :data="{
-            header : `วิธีการดูแลสุขภาพของตัวคุณและคนที่คุณรัก`, 
-            content : `การมีสุขภาพที่แข็งแรงปราศจากโรคภัยไข้เจ็บคงเป็นสิ่งที่ใครหลายคนปรารถนา แต่ถ้าเราอยากมีสุขภาพที่แข็งแรงเราจำเป็นที่จะต้องรู้จักวิธีการดูแลร่างกายของเราในการใช้ชีวิตประจำวันกันด้วย และสำหรับเคล็ดลับการดูแลสุขภาพให้ดีนั้นเราสามารถปฏิบัติได้ตามวิธีต่างๆ ดังนี้ค่ะ`
-          }" />
+    <Article :data="{
+      header : `วิธีการดูแลสุขภาพของตัวคุณและคนที่คุณรัก`, 
+      content : `การมีสุขภาพที่แข็งแรงปราศจากโรคภัยไข้เจ็บคงเป็นสิ่งที่ใครหลายคนปรารถนา แต่ถ้าเราอยากมีสุขภาพที่แข็งแรงเราจำเป็นที่จะต้องรู้จักวิธีการดูแลร่างกายของเราในการใช้ชีวิตประจำวันกันด้วย และสำหรับเคล็ดลับการดูแลสุขภาพให้ดีนั้นเราสามารถปฏิบัติได้ตามวิธีต่างๆ ดังนี้ค่ะ`
+    }" />
 
-          <b-img-lazy v-bind="mainProps" :src="require('@/assets/health-care.png')" alt="Image 1"></b-img-lazy>
-          
-          <Article v-for="(data, index) in datas" :key="index" :data="data" />
+    <About></About>
 
-          <p class="mb-0 mt-2 text-left" style="text-indent: 24px">ใครที่อยากมีสุขภาพที่สมบูรณ์แข็งแรงอย่าลืมปฏิบัติตัวตามคำแนะนำต่างๆ เหล่านี้กันดูนะคะ การไม่มีโรคถือเป็นลาภอันประเสริฐ แต่ถ้าคุณสามารถปฏิบัติตัวตามคำแนะนำข้างต้น ก็รับรองได้เลยว่าคุณจะมีสุขภาพที่สมบูรณ์แข็งแรงและห่างไกลจากโรคต่างๆ อย่างแน่นอน</p>
-        </b-col>
-      </b-row>
-    </b-container>
+    <Bar />
+
+    <!-- <router-view /> -->
+
+    <!-- <About />
+    
+    <Article v-for="(data, index) in datas" :key="index" :data="data" />
+
+    <p class="mb-0 mt-2 text-left" style="text-indent: 24px">ใครที่อยากมีสุขภาพที่สมบูรณ์แข็งแรงอย่าลืมปฏิบัติตัวตามคำแนะนำต่างๆ เหล่านี้กันดูนะคะ การไม่มีโรคถือเป็นลาภอันประเสริฐ แต่ถ้าคุณสามารถปฏิบัติตัวตามคำแนะนำข้างต้น ก็รับรองได้เลยว่าคุณจะมีสุขภาพที่สมบูรณ์แข็งแรงและห่างไกลจากโรคต่างๆ อย่างแน่นอน</p> -->
+
+
+        
   </div>
 </template>
 
@@ -25,6 +28,10 @@
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
 import Article from '@/components/Article.vue'
+
+import Bar from '@/components/Bar.vue'
+
+import About from '@/views/About.vue'
 
 const datas = [
   {
@@ -60,38 +67,16 @@ const datas = [
 export default {
   name: 'Home',
   components: {
-    Article
+    Article, 
+    About,
+    Bar,
   }, 
   
   data() {
     return {
       datas : datas, 
-
-      mainProps: {
-        center: true,
-        fluidGrow: true,
-        blank: true,
-        blankColor: '#bbb',
-        width: 600,
-        height: 400,
-        class: 'my-5'
-      }
     }
   }
 }
 </script>
 
-<style scoped>
-  #timeline {
-    height: 250vh;
-    background : #fbfbfb;
-  }
-</style>
-
-<style>
-  #main {
-    margin-top: 1em !important;
-    max-width: 620px;
-    margin : 0 auto;
-  }
-</style>
