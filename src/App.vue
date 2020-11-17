@@ -2,27 +2,14 @@
   <div id="app">
     <NavBar />
     
-    <div id="nav">
-      <!-- <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> -->
-    </div>
+    <div id="nav"></div>
 
     <b-container class="mb-4">
       <b-row>
-        <!-- <b-col id="timeline" class="d-block d-sm-none" cols="2">
-          <ul id="nav">
-            <li><router-link to="/">/</router-link></li>
-            <li><router-link to="/about">/about</router-link></li>
-            <li><router-link to="/bar">/bar</router-link></li>
-            <li><router-link to="/bar#anchor">/bar#anchor</router-link></li>
-            <li><router-link to="/bar#anchor2">/bar#anchor2</router-link></li>
-            <li><router-link to="/bar#1number">/bar#1number</router-link></li>
-          </ul>
-        </b-col> -->
         <b-col id="main">
           <canvas id="myCanvas" width="960" height="400"></canvas>
-            222
-          <transition name="fade" mode="out-in" @enter="afterLeave">
+          
+          <transition name="fade" mode="out-in">
             <!-- <router-view/> -->
             
           </transition>
@@ -36,9 +23,10 @@
 // @ is an alias to /src
 import NavBar from '@/components/NavBar.vue'
 
-// Draw a square on screen.
-// import { Stage, Shape, createjs, Graphics } from "@createjs/easeljs";
 import { Stage, Shape, createjs, Graphics, Container } from "@createjs/easeljs";
+
+const cos = Math.cos(30 * Math.PI / 180.0)
+const sin = Math.sin(30 * Math.PI / 180.0)
 
 const colorp = [
   '#ffb997', 
@@ -49,12 +37,6 @@ const colorp = [
 ];
 
 export default {
-  name: 'Home',
-  created() {
-    // this.stage = new Stage("myCanvas")
-    
-  },
-
   data () {
     return {
       h : 120, 
@@ -68,49 +50,49 @@ export default {
       this.stage = new Stage("myCanvas")
     }
 
-    var container = new Container()
+    // this.stage.addChild(
+    //   this.makeBox(
+    //   {x : -30*cos +235*cos , y : 150*sin +70*sin ,}, 
+    //   {
+    //     w : 135,
+    //     h : 60,
+    //     l : 15,
+    //   }
+    // ))
 
-    var w = 100;
-    var h = 35;
+    // this.stage.addChild(
+    //   this.makeBox(
+    //   {x : -30*cos, y : 150*sin,}, 
+    //   {
+    //     w : 15,
+    //     h : 60,
+    //     l : 100,
+    //   }
+    // ))
 
-    var ca = Math.cos(30 * Math.PI / 180.0)
-    var sa = Math.sin(30 * Math.PI / 180.0)
+    // this.stage.addChild(
+    //   this.makeBox(
+    //   {x :  -30*cos + 120*cos, y : 150*sin + 120*sin,}, 
+    //   {
+    //     w : 120,
+    //     h : 15,
+    //     l : 100,
+    //   }
+    // ))
 
-    // y = mx + b
-
-    var pin = {x:11, y:135}
-    
-    var cq = new Shape()
-    cq.graphics.beginFill(colorp[0])
-    cq.graphics
-    .moveTo(pin.x, pin.y)
-      .lineTo(pin.x+(-1*w), pin.y+(-1*w*sa))
-      .lineTo(pin.x+(-1*w), pin.y+(-1*w*sa)+(-1*h))
-      .lineTo(pin.x, pin.y+(-1*h))
-      .lineTo(pin.x, pin.y)
-
-    container.addChild(cq)
-
-    var ww = 30
-    var hh = 70
-
-    var ppin = {x:pin.x+(-1*w), y:pin.y+(-1*w*sa)+(-1*h)}
-
-    cq = new Shape()
-    cq.graphics.beginFill(colorp[0])
-    cq.graphics
-    .moveTo(ppin.x, ppin.y)
-      .lineTo(ppin.x+(-1*ww), ppin.y+(-1*ww*sa))
-      .lineTo(ppin.x+(-1*ww), ppin.y+(-1*ww*sa)+(-1*hh))
-      .lineTo(ppin.x, ppin.y+(-1*hh))
-      .lineTo(ppin.x, ppin.y)
-
-    container.addChild(cq)
+    this.stage.addChild(
+      this.makeBox(
+      {x : -100, y : 125,}, 
+      {
+        w : 130,
+        h : 70,
+        l : 150,
+      }
+    ))
 
     this.stage.x = 250
-    this.stage.y = 100
+    this.stage.y = 200
     
-    this.stage.addChild(container)
     this.stage.update()
     console.log(this.stage)
   },
@@ -119,13 +101,64 @@ export default {
     NavBar
   }, 
   methods: {
-    convert (s, arrs) {
+    makeBox(pin, box) {
+      const container = new Container()
 
-    },
+      let shape = new Shape()
 
-    afterLeave () {
-      console.log('????')
-      this.$root.$emit('triggerScroll')
+      shape.graphics.beginFill(colorp[0])
+        .moveTo(pin.x,            pin.y)
+        .lineTo(pin.x-box.w*cos,  pin.y-(box.w*sin))
+        .lineTo(pin.x-box.w*cos,  pin.y-(box.w*sin)-box.h)
+        .lineTo(pin.x,            pin.y-box.h)
+        .lineTo(pin.x,            pin.y)
+
+
+      container.addChild(shape)
+
+      // @ move pin of box
+      box.x = pin.x-box.w*cos
+      box.y = pin.y-(box.w*sin) - box.h
+
+      shape = new Shape()
+
+      shape.graphics.beginFill(colorp[1])
+        .moveTo(box.x,                      box.y)
+        .lineTo(box.x + box.l,              box.y - (box.l*sin*sin))
+        .lineTo(box.x + box.l + box.w*cos,  box.y - (box.l*sin*sin) + box.w/2 )
+        .lineTo(box.x + box.w*cos,          box.y - (box.w*sin) + box.w)
+        .lineTo(box.x,                      box.y)
+
+      container.addChild(shape)
+
+       // @ move pin of box
+      box.x = pin.x
+      box.y = pin.y
+
+      // @ โค้ง
+      shape = new Shape()
+      shape.graphics.beginFill(colorp[2])
+        .moveTo(box.x,                   box.y)
+        .bezierCurveTo(
+                box.x,                   box.y-(box.l/2*sin), 
+                box.x + box.h,           box.y,
+                box.x + box.l,           box.y-(sin*box.l/2)-box.h)
+        .lineTo(box.x,                   box.y-box.h)
+        .lineTo(box.x,                    box.y)
+      
+
+      // @ กล่อง
+      // shape = new Shape()
+      // shape.graphics.beginFill(colorp[2])
+      //   .moveTo(box.x,                  box.y)
+      //   .lineTo(box.x + box.l,          box.y-(box.l/2*sin))
+      //   .lineTo(box.x + box.l,          box.y-(box.l/2*sin)-box.h)
+      //   .lineTo(box.x,                  box.y-box.h)
+      //   .lineTo(box.x,                  box.y)
+
+      container.addChild(shape)
+        
+      return container
     }, 
   }, 
 }
@@ -133,7 +166,7 @@ export default {
 
 <style lang="scss">
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Avenir, Helvetica, Arial, sinns-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -154,21 +187,4 @@ export default {
     }
   }
 }
-
-.timeline {
-  // background : #fbfbfb;
-}
-</style>
-
-<style scoped>
-  #timeline {
-    /* height: 250vh; */
-    background : #fbfbfb;
-  }
-
-  #main {
-    margin-top: 1em !important;
-    max-width: 620px;
-    margin : 0 auto;
-  }
 </style>
